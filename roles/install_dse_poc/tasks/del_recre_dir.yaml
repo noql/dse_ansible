@@ -1,0 +1,23 @@
+- name: Cleaning up the dir
+  file:
+      path: "{{ item }}"
+      state: absent
+  with_items:
+      - '{{ data_dir }}'
+      - '{{ hints_dir }}'
+      - '{{ cl_dir }}'
+      - '{{ cdc_raw }}'
+      - '{{ scd_dir }}'
+
+- name: Creating the dir
+  file:
+      path: "{{ item }}"
+      state: directory
+      owner: cassandra
+      group: cassandra
+  with_items:
+      - '{{ data_dir }}'
+      - '{{ hints_dir }}'
+      - '{{ cl_dir }}'
+      - '{{ cdc_raw }}'
+      - '{{ scd_dir }}'

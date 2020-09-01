@@ -1,0 +1,85 @@
+- name: Edit the cassandra-rackdc.properties for the dc
+  lineinfile:
+     path: "{{ cassandra_dir }}/cassandra-rackdc.properties"
+     regexp: '^dc='
+     line: 'dc={{ DC }}'
+
+- name: Edit the cassandra-rackdc.properties for the rack
+  lineinfile:
+     path: "{{ cassandra_dir }}/cassandra-rackdc.properties"
+     regexp: '^rack='
+     line: 'rack={{ rack }}'
+
+- name: Enable spark 
+  lineinfile:
+     path: "{{ dse_default_dir }}/dse"
+     regexp: '^SPARK_ENABLED='
+     line: "SPARK_ENABLED={{ analytics }}"
+
+- name: Enable Solr
+  lineinfile:
+     path: "{{ dse_default_dir }}/dse"
+     regexp: '^SOLR_ENABLED='
+     line: "SOLR_ENABLED={{ search }}"
+
+- name: Enable Graph
+  lineinfile:
+     path: "{{ dse_default_dir }}/dse"
+     regexp: '^GRAPH_ENABLED='
+     line: "GRAPH_ENABLED={{ GRAPH_ENABLED }}"
+
+- name: Edit cassandra.yaml propoerties cluster_name
+  lineinfile:
+     path: "{{ cassandra_dir }}/cassandra.yaml"
+     regexp: '^cluster_name:'
+     line: "cluster_name: '{{ cluster_name }}'"
+
+- name: Edit cassandra.yaml propoerties num_tokens
+  lineinfile:
+     path: "{{ cassandra_dir }}/cassandra.yaml"
+     regexp: '# num_tokens:'
+     line: "num_tokens: {{ numtoken }}"
+
+- name: Edit cassandra.yaml propoerties commitlog_directory
+  lineinfile:
+     path: "{{ cassandra_dir }}/cassandra.yaml"
+     regexp: '^commitlog_directory:'
+     line: "commitlog_directory: '{{ cl_dir }}'"
+
+- name: Edit cassandra.yaml propoerties cdc_raw_directory
+  lineinfile:
+     path: "{{ cassandra_dir }}/cassandra.yaml"
+     regexp: '^cdc_raw_directory:'
+     line: "cdc_raw_directory: '{{ cdc_raw }}'"
+
+- name: Edit cassandra.yaml propoerties saved_caches_directory
+  lineinfile:
+     path: "{{ cassandra_dir }}/cassandra.yaml"
+     regexp: '^saved_caches_directory:'
+     line: "saved_caches_directory: '{{ scd_dir }}'"
+
+- name: Edit cassandra.yaml propoerties data_dir
+  replace:
+    name: "{{ cassandra_dir }}/cassandra.yaml"
+    regexp: "- /var/lib/cassandra/data"
+    replace: "- {{ data_dir }}"
+
+- name: Edit cassandra.yaml propoerties seeds
+  lineinfile:
+     path: "{{ cassandra_dir }}/cassandra.yaml"
+     regexp: '^          - seeds:'
+     line: '          - seeds: "{{ seed_nodes }}"'
+
+- name: Edit cassandra.yaml propoerties listen_address
+  lineinfile:
+     path: "{{ cassandra_dir }}/cassandra.yaml"
+     regexp: '^listen_address:'
+     line: 'listen_address: {{ ansible_default_ipv4["address"] }}'
+
+- name: Edit cassandra.yaml propoerties native_transport_address
+  lineinfile:
+     path: "{{ cassandra_dir }}/cassandra.yaml"
+     regexp: '^native_transport_address:'
+     line: 'native_transport_address: {{ ansible_default_ipv4["address"] }}'
+
+

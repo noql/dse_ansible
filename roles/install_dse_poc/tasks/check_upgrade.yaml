@@ -1,0 +1,21 @@
+---
+- name: Make sure you have the DC correct
+  shell: "nodetool status | grep -i {{ DC }}"
+  register: _dc
+
+- name: Print which DC the node belongs to after the upgrade
+  when: '"Datacenter: {{ DC }}" in _dc.stdout'
+  debug: msg="The Node {{ ansible_host }} belongs to {{ DC }} datacenter"
+
+- name: Check if you have any errors.
+  shell: "grep -i ERROR /var/log/cassandra/*.log"
+
+- name: Check Cassandra version
+  command: "nodetool version"
+  register: _cassandra_ver
+
+- name: Check DSE version
+  command: "dse -v"
+  register: _dse_ver
+
+

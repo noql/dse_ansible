@@ -1,0 +1,13 @@
+- name: Create required diretcories
+  include: del_recre_dir.yaml
+
+- name: install dse 
+  include: install.yaml
+
+- name: edit yamls for cassandra and dse
+  include: config_change.yaml
+- name: start DSE
+  include: start.yaml
+
+- name: Check Upgrade 
+  include: check_upgrade.yaml

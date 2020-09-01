@@ -1,0 +1,7 @@
+---
+- name: Start dse on Current Node
+  command: service dse start
+  ignore_errors: yes
+
+- pause:
+    seconds: 60

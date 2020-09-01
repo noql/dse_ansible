@@ -1,0 +1,20 @@
+- name: Copy the repo to the target yum repo dir.
+  copy:
+    src: datastax.repo
+    dest: /etc/yum.repos.d
+
+- name: Install DSE version 6.7.8
+  yum:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items:
+    - "dse-full-{{ dse_ver_target }}-1"
+    - "dse-{{ dse_ver_target }}-1"
+    - "dse-libgraph-{{ dse_ver_target }}-1"
+    - "dse-libsolr-{{ dse_ver_target }}-1"
+    - "dse-libtomcat-{{ dse_ver_target }}-1"
+    - "dse-liblog4j-{{ dse_ver_target }}-1"
+    - "dse-libcassandra-{{ dse_ver_target }}-1"
+    - "dse-libspark-{{ dse_ver_target }}-1"
+    - "dse-libhadoop2-client-{{ dse_ver_target }}-1"
