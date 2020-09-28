@@ -10,6 +10,6 @@ cdc_raw: '/data/CDC'
 scd_dir: '/data/SCD'
 seed_nodes: '<list your seed nodes'
 numtoken: '8'
-dse_yaml: 'dse.yaml_prod'
-cassandra_yaml: 'cassandra_prod.yaml'
+dse_yaml: 'dse.yaml_dev'
+cassandra_yaml: 'cassandra_dev.yaml'
 
