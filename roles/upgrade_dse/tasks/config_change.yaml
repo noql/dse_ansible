@@ -1,0 +1,48 @@
+- name: Template cassandra.yml
+  template:
+     src: "{{ cassandra_yaml }}"
+     dest: "{{ cassandra_dir }}/cassandra.yaml"
+     mode: 0664
+
+- name: Edit the cassandra-rackdc.properties for the dc
+  lineinfile:
+     path: "{{ cassandra_dir }}/cassandra-rackdc.properties"
+     regexp: '^dc='
+     line: 'dc={{ DC }}'
+
+- name: Edit the cassandra-rackdc.properties for the rack
+  lineinfile:
+     path: "{{ cassandra_dir }}/cassandra-rackdc.properties"
+     regexp: '^rack='
+     line: 'rack={{ rack }}'
+
+- name: Update jvm.options with 31 GB heap
+  template:
+     src: jvm.options
+     dest: "{{ cassandra_dir }}/jvm.options"
+     mode: 0644
+
+- name: Edit the dse.yaml file
+  lineinfile:
+     path: "{{ dse_default_dir }}/dse"
+     regexp: '^SPARK_ENABLED='
+     line: "SPARK_ENABLED={{ analytics }}"
+
+- name: Edit the dse.yaml file
+  lineinfile:
+     path: "{{ dse_default_dir }}/dse"
+     regexp: '^SOLR_ENABLED='
+     line: "SOLR_ENABLED={{ search }}"
+
+- name: Edit the dse.yaml file 
+  lineinfile:
+     path: "{{ dse_default_dir }}/dse"
+     regexp: '^GRAPH_ENABLED='
+     line: "GRAPH_ENABLED={{ GRAPH_ENABLED }}"
+
+- name: Template dse.yaml
+  copy:
+     src: "{{ dse_yaml }}"
+     dest: "{{ dse_install_dir }}/dse.yaml"
+
+

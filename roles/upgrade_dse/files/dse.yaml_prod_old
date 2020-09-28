@@ -1,0 +1,87 @@
+spark_cluster_info_options: {enabled: false, refresh_rate_ms: 10000}
+system_info_encryption: {enabled: false, cipher_algorithm: AES, secret_key_strength: 128,
+  chunk_length_kb: 64}
+authentication_options:
+  enabled: true
+  default_scheme: ldap
+  other_schemes: [internal]
+  scheme_permissions: false
+  allow_digest_with_kerberos: true
+  plain_text_without_ssl: warn
+  transitional_mode: disabled
+spark_security_enabled: false
+config_encryption_active: false
+histogram_data_options: {enabled: 'false', refresh_rate_ms: '10000', retention_count: '3'}
+config_encryption_key_name: system_key
+spark_security_encryption_enabled: false
+spark_process_runner:
+  runner_type: default
+  run_as_runner_options:
+    user_slots: [slot1, slot2]
+solr_resource_upload_limit_mb: 10
+resource_level_latency_tracking_options: {enabled: 'false', refresh_rate_ms: '10000'}
+spark_application_info_options:
+  enabled: false
+  refresh_rate_ms: 10000
+  driver: {sink: false, connectorSource: false, jvmSource: false, stateSource: false}
+  executor: {sink: false, connectorSource: false, jvmSource: false}
+user_level_latency_tracking_options: {enabled: 'false', refresh_rate_ms: '10000',
+  top_stats_limit: '100', async_writers: '1', backpressure_threshold: '1000', flush_timeout_ms: '1000',
+  quantiles: 'false'}
+solr_request_handler_metrics_options: {enabled: 'false', ttl_seconds: '604800', refresh_rate_ms: '60000'}
+spark_shared_secret_bit_length: 256
+internode_messaging_options: {port: 8609}
+performance_max_threads: '32'
+insights_options: {data_dir: /data/insights_data, log_dir: /data/insights_log}
+async_bootstrap_reindex: false
+enable_health_based_routing: true
+lease_metrics_options: {enabled: false, ttl_seconds: 604800}
+node_health_options: {refresh_rate_ms: 60000, uptime_ramp_up_period_seconds: 10800,
+  dropped_mutation_window_minutes: 30}
+solr_latency_snapshot_options: {enabled: 'false', ttl_seconds: '604800', refresh_rate_ms: '60000'}
+db_summary_stats_options: {enabled: 'false', refresh_rate_ms: '10000'}
+solr_cache_stats_options: {enabled: 'false', ttl_seconds: '604800', refresh_rate_ms: '60000'}
+cluster_summary_stats_options: {enabled: 'false', refresh_rate_ms: '10000'}
+solr_slow_sub_query_log_options: {enabled: 'false', ttl_seconds: '604800', async_writers: '1',
+  threshold_ms: '3000'}
+system_key_directory: /etc/dse/conf
+solr_index_stats_options: {enabled: 'false', ttl_seconds: '604800', refresh_rate_ms: '60000'}
+audit_logging_options:
+  enabled: false
+  logger: SLF4JAuditWriter
+  retention_time: 0
+  cassandra_audit_writer_options: {mode: sync, batch_size: 50, flush_time: 250, queue_size: 30000,
+    write_consistency: QUORUM}
+cql_slow_log_options: {enabled: 'true', threshold: '2000.0', minimum_samples: '100',
+  ttl_seconds: '64000', skip_writing_to_db: 'true', num_slowest_queries: '5'}
+solr_update_handler_metrics_options: {enabled: 'false', ttl_seconds: '604800', refresh_rate_ms: '60000'}
+cql_system_info_options: {enabled: 'false', refresh_rate_ms: '10000'}
+spark_ui_options:
+  encryption: inherit
+  encryption_options: {enabled: false, keystore: resources/dse/conf/.ui-keystore,
+    keystore_password: cassandra}
+performance_core_threads: '4'
+authorization_options: {enabled: true, transitional_mode: disabled, allow_row_level_security: false}
+shard_transport_options: {netty_client_request_timeout: 60000}
+role_management_options: {mode: ldap}
+ldap_options:
+  server_host: ulinedm-ldap.api.ulinedm.com
+  server_port: 636
+  search_dn: cn=_dseldapsearchprod,OU=ServiceAccounts,DC=ulinedm,DC=com
+  search_password: 3PeY8XYyxN9sG6cNUHDj
+  use_ssl: true
+  use_tls: false
+  truststore_path: /var/lib/ssl/catruststore.jks
+  truststore_password: ulinedse
+  truststore_type: jks
+  user_search_base: DC=ulinedm,DC=com
+  user_search_filter: (sAMAccountName={0})
+  user_memberof_attribute: memberof
+  group_search_type: memberof_search
+  group_name_attribute: cn
+  credentials_validity_in_ms: 43200000
+  search_validity_in_seconds: 0
+  connection_pool: {max_active: 8, max_idle: 8}
+ttl_index_rebuild_options: {fixed_rate_period: 300, initial_delay: 20, max_docs_per_batch: 4096,
+  thread_pool_size: 1}
+graph_events: {ttl_seconds: 600}

@@ -1,0 +1,19 @@
+#- name: Stop DSE
+#  include_role:
+#    name: stop_dse
+
+- name: Install DSE
+  include: install.yaml
+
+- name: Config changes
+  include: config_change.yaml
+
+- name: Start DSE
+  include_role:
+    name: start_dse
+
+- name: Check 
+  include: check_upgrade.yaml
+
+
+
