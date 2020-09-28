@@ -1,0 +1,26 @@
+- name: Clone git repo to localhost
+  git:
+    executable: "{{ git_install }}"
+    repo: "{{ config_repo_url }}"
+    clone: yes
+    version: "{{ branch_name }}"
+    dest: "{{ local_loc }}"
+    accept_hostkey: yes
+    force: yes
+    recursive: yes
+  delegate_to: localhost
+
+- name: add git user email
+  git_config:
+      name: user.email
+      repo: "{{ local_loc }}"
+      scope: local
+      value: _databaseteam@uline.com
+  delegate_to: localhost
+- name: Add username
+  git_config:
+      name: user.name
+      repo: "{{ local_loc }}"
+      scope: local
+      value: _databaseteam
+  delegate_to: localhost

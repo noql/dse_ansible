@@ -1,0 +1,8 @@
+local_loc: '/home/ansible/dse_schema_backup_loc'
+source_loc: '/home/cassandra/'
+dse_install_dir: '/etc/dse/'
+git_install: '/apps/ansible/git/current_git/bin/git'
+target_script_loc: '/home/cassandra'
+config_repo_url: 'ssh://tfs.ulinedm.com:22/tfs/Uline/Uline/_git/DataStax_Schema_Dev-Sys'
+branch_name: master
+

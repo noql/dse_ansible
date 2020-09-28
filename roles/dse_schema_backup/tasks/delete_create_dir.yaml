@@ -1,0 +1,9 @@
+- name: Create the directories to be pushed to Git
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+     - '{{ local_loc }}/ConfigFiles_{{ ansible_hostname }}'
+     - '{{ local_loc }}/schema'
+  delegate_to: localhost
+

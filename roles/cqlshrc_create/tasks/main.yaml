@@ -1,0 +1,14 @@
+- name: Delete .cassandra if it exists as a file
+  shell: rm -rf "{{ destination }}"
+
+- name : Create dir if it doesnt exist
+  file: 
+    path: "{{ destination }}/"
+    state: absent
+    mode: '0755'
+
+- name: Setup cqlsh and ssl for the id.
+  template: 
+     src: cqlshrc
+     dest: "{{ destination }}/"
+     mode: 0777

@@ -1,0 +1,24 @@
+- name: Delete and recreate the directories
+  include: delete_create_dir.yaml
+
+- name: git config
+  include: git_repo_config.yaml
+  run_once: true
+
+- name: execute and copy the schema
+  include: exec_copy_schema.yaml
+  run_once: true
+
+- name: Copy and sync the node config to ansible local
+  include: get_dse_config.yaml
+
+- name: Push the latest core details to the repo {{ config_repo_url }}
+  shell: git add {{ local_loc }} && /bin/git commit -m "updated core config" && /bin/git push origin {{ branch_name }}
+  args:
+       chdir: "{{ local_loc }}"
+  delegate_to: localhost 
+  run_once: true
+  ignore_errors: true
+
+- name: Clean up after your done
+  include: delete_create_dir.yaml

@@ -1,0 +1,18 @@
+- set_fact:
+   var_file: "{{ env }}_main.yaml"
+
+- name: Include vars from specific file based on environment
+  include_vars:
+   file: "{{ var_file }}"
+
+- name: Template dse.yml
+  copy:
+     src: "{{ dse_yaml }}"
+     dest: "{{ dse_install_dir }}/dse.yaml"
+
+- name: Template cassandra.yml
+  template:
+     src: "{{ cassandra_yaml }}"
+     dest: "{{ cassandra_dir }}/cassandra.yaml"
+     mode: 0664
+

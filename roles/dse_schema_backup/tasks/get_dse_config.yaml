@@ -1,0 +1,6 @@
+- name: Copy Cassandra config files from source server to Ansible server
+  synchronize:
+     mode: pull
+     src: "{{ dse_install_dir }}"
+     dest: "{{ local_loc }}//ConfigFiles_{{ ansible_hostname }}" 
+     recursive: yes

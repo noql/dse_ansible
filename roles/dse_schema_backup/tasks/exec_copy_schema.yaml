@@ -1,0 +1,19 @@
+- name: Copy the script to Target server
+  copy:
+    src: schema_backup.sh
+    dest: "{{ target_script_loc }}"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: 0744
+
+
+- name: Execute cqlsh script to run the schema backup"
+  shell: '{{ source_loc }}schema_backup.sh'
+  ignore_errors: yes
+
+- name: Copy file from datastax server to Ansible server
+  synchronize:
+     mode: pull
+     src: "{{ source_loc }}*Schema_dse"
+     dest: "{{ local_loc }}/schema"
+     recursive: yes

@@ -1,0 +1,12 @@
+- name: backup the existing cassandra.yaml
+  copy: 
+     src: "{{ cassandra_dir }}/cassandra.yaml"
+     dest: "{{ cassandra_dir }}/cassandra.yaml_original" 
+     backup: yes
+  delegate_to: "{{ inventory_hostname }}"
+
+- name: Template cassandra.yml
+  template: 
+     src: cassandra.yaml
+     dest: "{{ cassandra_dir }}/cassandra.yaml"
+     mode: 0664
