@@ -1,0 +1,13 @@
+
+---
+- hosts: "{{ target }}"
+  become: true
+  become_method: sudo
+  serial: 1
+  tasks:
+    - debug:
+        msg: "Initiating Role Install DSE"
+    - include_role:
+        name: install_dse
+    - debug:
+        msg: "Completed Role Install DSE"

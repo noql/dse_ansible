@@ -1,0 +1,10 @@
+-
+  name: Backup the files
+  hosts: DSESPRDDC2
+  roles:
+     - backup_files_dse
+-
+  name: restore the files
+  hosts: DSETRN
+  roles:
+     - restore_files_dse

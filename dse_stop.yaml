@@ -1,0 +1,10 @@
+-
+  name: stop dse
+  hosts: "{{ target }}"
+  become: true
+  become_method: sudo
+  serial: 1
+  roles:
+     - stop_dse
+
+

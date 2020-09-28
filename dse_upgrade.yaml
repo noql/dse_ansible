@@ -1,0 +1,13 @@
+- 
+  name: Backup Config and schema
+  hosts: "{{ target }}"
+  remote_user: cassandra
+  roles:
+     - dse_schema_backup
+- name: Upgrade process
+  hosts: "{{ target }}"
+  become: true
+  become_method: sudo
+  serial: 1
+  roles: 
+      - upgrade_dse

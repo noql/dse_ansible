@@ -1,0 +1,65 @@
+
+---
+- hosts: "{{ target }}"
+  tasks:
+    
+     - name: Refresh Roles cache
+       shell: "nodetool sjk mx -mc -b org.apache.cassandra.auth:type=RolesCache -op invalidateAll"
+       register: rolecache_refresh
+
+     - name: Refresh Permissions Cache
+       shell: "nodetool sjk mx -mc -b org.apache.cassandra.auth:type=PermissionsCache -op invalidateAll"
+       register: PermissionsCache_refresh
+     
+     - name: Email the team with status
+       mail:
+           from: ansible@dc-dsm1.ulinedm.com
+           to: databaseteam@uline.com
+           subject: Roles cache refresh  success.
+           body: RolesCache cache and permissions cache has been refreshed successfully.
+       when: rolecache_refresh.rc == 0 and PermissionsCache_refresh.rc == 0
+       run_once: true
+       delegate_to: localhost
+
+     - name: Email the team with status
+       mail:
+           from: ansible@dc-dsm1.ulinedm.com
+           to: databaseteam@uline.com
+           subject: Roles cache refresh on host {{ ansible_host }} in  {{ env }} failed.
+           body: RolesCache cache was not refreshed  but the permissions cache has been refreshed successfully.
+       when: rolecache_refresh.rc != 0 and PermissionsCache_refresh.rc == 0
+      
+     - name: Email the team with status
+       mail:
+           from: ansible@dc-dsm1.ulinedm.com
+           to: databaseteam@uline.com
+           subject: permissions cache  refresh on host {{ ansible_host }}  in  {{ env }} failed.
+           body: RolesCache cache was refreshed  but the permissions cache couldnt be refreshed successfully.
+       when: rolecache_refresh.rc == 0 and PermissionsCache_refresh.rc != 0
+
+     - name: Email the team with status
+       mail:
+           from: ansible@dc-dsm1.ulinedm.com
+           to: databaseteam@uline.com
+           subject: Roles and permissions cache on host {{ ansible_host }}  in  {{ env }} failed.
+           body: RolesCache cache  and permissions cache couldnt be refreshed successfully.
+       when: rolecache_refresh.rc != 0 and PermissionsCache_refresh.rc != 0
+    
+     - name: THIS IS FOR Nagios alert
+       debug:
+           msg: Cache refresh FAILED 
+       when: rolecache_refresh.rc != 0 or PermissionsCache_refresh.rc != 0
+    
+     - name: THIS IS FOR Nagios alert
+       debug:
+           msg: Cache refresh SUCCESS
+       when: rolecache_refresh.rc == 0 and PermissionsCache_refresh.rc == 0
+                      
+
+
+ 
+         
+
+
+
+    

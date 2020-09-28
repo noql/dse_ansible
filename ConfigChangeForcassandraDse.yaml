@@ -1,0 +1,8 @@
+-
+  name: DSE Config change for DSE and Cassandra
+  hosts: "{{ target }}"
+  serial: 1
+  roles:
+     - ConfigChangeForcassandraDse
+
+

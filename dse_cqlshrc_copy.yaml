@@ -1,0 +1,8 @@
+-
+  name: Setup cqlshrc   
+  hosts: "{{ target }}"
+  ##become: true
+  ##become_method: sudo
+  serial: 1
+  roles:
+     - cqlshrc_create
