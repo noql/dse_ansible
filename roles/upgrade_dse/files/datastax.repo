@@ -1,6 +1,5 @@
 [datastax]
 name = DataStax Repo for DataStax Enterprise
-baseurl=https://rajesh.kantamani%40uline.com:Zing%40123@rpm.datastax.com/enterprise
+baseurl=https://neverexpired1%40gmail.com:never%40Expired@rpm.datastax.com/enterprise
 enabled=1
 gpgcheck=0
-
