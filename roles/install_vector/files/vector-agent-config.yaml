@@ -6,7 +6,7 @@
 #
 
 # The Customer ID. Contact DataStax Vector team for this value.
-customer_id: FUGGCfqqxlpGqjlMhQaYmw
+customer_id: <dse customer id>
 
 # The mode the agent will be running in.
 delivery_mode: upload_to_s3
@@ -15,13 +15,13 @@ delivery_mode: upload_to_s3
 storage_directory: /tmp
 
 # Information for the destination S3 bucket where information should be stored.
-aws_key: AKIATMBVH4P6EIH3AJTZ
-aws_secret: bBeNBsUYpLI6z6kK6YV2LMTaz/ESStfL2PeCCcVQ
-aws_bucket: com.datastax.vector.production.upload.prod
+aws_key: <Your aws key>
+aws_secret: <Your aws key>
+aws_bucket: <Your aws bocket>
 
 # Custom key-value pairs to associate with information extracted from this node.
 # e.g.
 # user_metadata:
 #   env: qa
 user_metadata:
-  env: uat
+  env: <Your env>
