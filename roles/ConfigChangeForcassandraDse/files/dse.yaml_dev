@@ -168,10 +168,10 @@ ldap_options:
 #     # The distinguished name (DN) of an account that is used to search for other users on the
 #     # LDAP server. This user should have only the necessary permissions to do the search
 #     # If not present then an anonymous bind is used for the search
-     search_dn: cn=_dseldapsearchuat,OU=ServiceAccounts,DC=ulinedm,DC=com
+     search_dn: cn={{ cn_name }},OU=ServiceAccounts,DC={{ domain_name }},DC=com
 #
 #     # Password of the search_dn account
-     search_password: b8N5zQnypx4bq6NEfJ7t
+     search_password: {{ password }}
 #
 #     # Set to true to use an SSL encrypted connection. In this case the server_port needs
 #     # to be set to the LDAP port for the server
@@ -181,7 +181,7 @@ ldap_options:
      use_tls: false
 #
      truststore_path: /var/lib/ssl/truststore.jks
-     truststore_password: ulinedse
+     truststore_password: {{ trust_store_password }}
      truststore_type: jks
      user_search_base: DC=ulinedm,DC=com
      user_search_filter: (sAMAccountName={0})
@@ -205,7 +205,7 @@ ldap_options:
 #     #     memberof_search  - will get groups from the memberof attribute of the user. This
 #     #                        requires the directory server to have memberof support
      group_search_type: memberof_search
-#     group_search_base: OU=Groups,DC=ulinedm,DC=com
+#     group_search_base: OU=Groups,DC=,DC=com
 #     group_search_filter: (uniquemember={0})
 #
 #     # The attribute in the group entry that holds the group name.
