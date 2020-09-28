@@ -1,0 +1,8 @@
+- name: Execute the sstable_loader for keyspace 
+  shell: '{{ target_script_loc }}/load_data.sh  {{ keyspace_name }} {{ src_keyspace }} {{data_dir}}'
+  run_once: true
+  ignore_errors: yes
+  
+
+
+

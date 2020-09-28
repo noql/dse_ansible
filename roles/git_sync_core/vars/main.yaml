@@ -1,0 +1,2 @@
+git_install: /apps/ansible/git/current_git/bin/git
+branch_name: master

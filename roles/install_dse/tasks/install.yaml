@@ -1,0 +1,37 @@
+- name: check if java is installed
+  command: java -version
+  register: java_version
+
+- name: install java 
+  yum: 
+     name: java
+     state: present
+  when: java_version.rc!=0
+
+- debug:
+    var: java_version.rc
+  
+- debug :
+   msg: "Java is installed"
+  when: java_version.rc==0 
+   
+
+- name: Copy the repo to the target yum repo dir.
+  copy:
+    src: datastax.repo
+    dest: /etc/yum.repos.d
+
+
+- name: Install DSE - specific version
+  yum:
+    name:
+       - "dse-full-{{ dse_ver_target }}-1"
+       - "dse-{{ dse_ver_target }}-1"
+       - "dse-libgraph-{{ dse_ver_target }}-1"
+       - "dse-libsolr-{{ dse_ver_target }}-1"
+       - "dse-libtomcat-{{ dse_ver_target }}-1"
+       - "dse-liblog4j-{{ dse_ver_target }}-1"
+       - "dse-libcassandra-{{ dse_ver_target }}-1"
+       - "dse-libspark-{{ dse_ver_target }}-1"
+       - "dse-libhadoop2-client-{{ dse_ver_target }}-1"
+

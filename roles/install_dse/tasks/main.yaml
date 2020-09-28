@@ -1,0 +1,25 @@
+#- name: Stop DSE
+#  include_role:
+#    name: stop_dse
+
+- name: Drop & create Directories
+  include: del_recre_dir.yaml
+
+- name: Install DSE
+  include: install.yaml
+
+- name: Install OpsCenter Agent
+  include: install_opscenter_agent.yaml
+
+- name: Config changes
+  include: config_change.yaml
+
+- name: Start DSE
+  include_role:
+    name: start_dse
+
+- name: Check 
+  include: check_upgrade.yaml
+
+
+

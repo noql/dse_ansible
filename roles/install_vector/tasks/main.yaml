@@ -1,0 +1,35 @@
+- name: Creating dse-packages directory if it doesnt exist
+  file:
+    path: "{{ install_dir }}"
+    state: directory
+    mode: 0755
+    group: root
+    owner: root
+- name: Template for YAML and JAR
+  copy:  
+      src: "{{ item }}" 
+      dest: "{{ install_dir }}"
+  with_items:
+    - vector-agent-config.yaml
+    - vector-agent-{{ version_number }}.jar 
+
+- name: Compile the jar
+  shell: "java -jar {{ install_dir }}/vector-agent-{{ version_number }}.jar validate --config {{ install_dir }}/vector-agent-config.yaml"
+
+- name: Delete the line incase if it exists
+  lineinfile:
+      path: "{{ dse_dir }}/dse-env.sh"
+      line: "{{ item }}"
+      state: absent
+  with_items:
+    - 'JVM_OPTS="$JVM_OPTS -javaagent:{{ install_dir }}/vector-agent-{{ version_number }}.jar"'
+    - 'JVM_OPTS="$JVM_OPTS -Dvector-agent.config={{ install_dir }}/vector-agent-config.yaml"'
+    - 'JVM_OPTS="$JVM_OPTS -Dvector-agent.config={{ install_dir }}/vector-agent-{{ version_number }}.jar"'
+
+- name: Add the options to the dse-env.sh filr
+  lineinfile:
+      path: "{{ dse_dir }}/dse-env.sh"
+      line: "{{ item }}"
+  with_items:
+    - 'JVM_OPTS="$JVM_OPTS -javaagent:{{ install_dir }}/vector-agent-{{ version_number }}.jar"' 
+    - 'JVM_OPTS="$JVM_OPTS -Dvector-agent.config={{ install_dir }}/vector-agent-config.yaml"'

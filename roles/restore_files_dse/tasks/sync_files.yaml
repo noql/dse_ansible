@@ -1,0 +1,19 @@
+- name: Delete the directories for tables
+  find:
+      path: '{{ local_loc }}/{{ src_keyspace }}'
+      file_type: directory
+  register: directories_to_copy
+  delegate_to: localhost
+
+- name:  Copy the files from source
+  copy:
+     src: '{{item.path}}'
+     dest: '{{ data_dir }}/'
+  with_items: "{{directories_to_copy.files}}"
+
+- name: Copy the files to target
+  synchronize:
+     mode: push
+     src: '{{item.path}}'
+     dest: '{{ data_dir }}/'
+  with_items: "{{directories_to_copy.files}}"

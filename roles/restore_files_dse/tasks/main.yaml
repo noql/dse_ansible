@@ -1,0 +1,12 @@
+- name: Copy the files
+  include: copy_files.yaml
+
+
+- name: execute
+  include: execute_scripts.yaml
+
+
+- name: Sstable loader
+  include: execute_sstable_loader.yaml
+  run_once: True
+

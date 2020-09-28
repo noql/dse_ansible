@@ -1,0 +1,12 @@
+- name: Install OpsCenter Agent - specific version
+  yum:
+    name:
+       - "datastax-agent-{{ opscenter_agent_ver }}-1"
+
+- name: Start datastax agent on Current Node
+  command: service datastax-agent start
+  ignore_errors: yes
+
+- pause:
+    seconds: 60
+

@@ -1,0 +1,4 @@
+local_loc: '/data01/dse_data_keyspace_backup'
+target_script_loc: '/home/cassandra'
+data_dir: '/data/{{ keyspace_name }}'
+file_loc: '/home/ansible/roles/restore_files_dse/files'

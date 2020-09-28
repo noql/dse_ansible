@@ -1,0 +1,13 @@
+- name: Drain the current node
+  command: "nodetool drain"
+  ignore_errors: yes
+
+- pause:
+   seconds: 30
+
+- name: Start dse on Current Node
+  command: service dse stop
+  ignore_errors: yes
+
+- pause:
+   seconds: 30

@@ -1,0 +1,48 @@
+- name: Copy the script to Target server
+  copy: 
+    src: create_ddl.sh
+    dest: "{{ target_script_loc }}"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: 0744
+- name: Copy the script to Target server
+  copy:
+    src: delete_tables_structure.sh
+    dest: "{{ target_script_loc }}"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: 0744
+- name: Copy the script to Target server
+  copy:
+    src: create_tables.sh
+    dest: "{{ target_script_loc }}"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: 0744
+
+
+- name: Copy the file from mwiapp01 to mwiapp02 using Method Pull
+  copy:
+     src: '{{ data_dir }}/list_tables_{{ keyspace_name }}'
+     dest: "{{ target_script_loc }}"
+     remote_src: yes
+  run_once: true
+
+- name: Copy the file from mwiapp01 to mwiapp02 using Method Pull
+  copy:
+     src: '{{ data_dir }}/{{ keyspace_name }}_backup'
+     dest: "{{ target_script_loc }}"
+     remote_src: yes
+  run_once: true
+
+- name: Copy the DDL from Staging (Ansible) server to the target location
+  copy:
+    src: load_data.sh
+    dest: "{{ target_script_loc }}"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: 0744
+
+  
+     
+

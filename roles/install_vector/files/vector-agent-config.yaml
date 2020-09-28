@@ -1,0 +1,27 @@
+#
+# Copyright 2020. DataStax Limited. All Rights Reserved.
+#
+# Unauthorized copying of this code, via any medium is strictly prohibited.
+# Proprietary and confidential.
+#
+
+# The Customer ID. Contact DataStax Vector team for this value.
+customer_id: FUGGCfqqxlpGqjlMhQaYmw
+
+# The mode the agent will be running in.
+delivery_mode: upload_to_s3
+
+# Directory to store information before uploading.
+storage_directory: /tmp
+
+# Information for the destination S3 bucket where information should be stored.
+aws_key: AKIATMBVH4P6EIH3AJTZ
+aws_secret: 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
+aws_bucket: com.datastax.vector.production.upload.prod
+
+# Custom key-value pairs to associate with information extracted from this node.
+# e.g.
+# user_metadata:
+#   env: qa
+user_metadata:
+  env: uat

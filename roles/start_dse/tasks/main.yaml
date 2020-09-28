@@ -1,0 +1,10 @@
+- name: Start dse on Current Node
+  command: service dse start
+  ignore_errors: yes
+#  service: 
+#  #    name: dse
+#  #    state: started 
+#  #    enabled: yes
+
+- pause:
+    seconds: 120

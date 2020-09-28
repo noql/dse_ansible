@@ -1,0 +1,6 @@
+- name: Analyzing the directories to delete...
+  file:
+     path: "{{ data_dir }}/{{item}}-*"
+     state: absent
+  loop: "{{ lookup('file', '{{ local_loc }}/{{ src_keyspace }}/list_tables_{{ src_keyspace }}').splitlines() }}"
+

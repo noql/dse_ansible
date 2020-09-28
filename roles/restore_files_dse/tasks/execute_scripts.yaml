@@ -1,0 +1,14 @@
+- name: Drop the tables
+  shell: '{{ target_script_loc }}/create_ddl.sh {{ keyspace_name }} {{ src_keyspace }}'
+  run_once: true
+  ignore_errors: yes
+
+- name: Cleanup the directories
+  shell: '{{ target_script_loc }}/delete_tables_structure.sh {{ keyspace_name }} {{ src_keyspace }}'
+  ignore_errors: yes
+
+- name: Create the required tables
+  shell: '{{ target_script_loc }}/create_tables.sh {{ keyspace_name }} {{ src_keyspace }}'
+  run_once: true
+  ignore_errors: yes
+

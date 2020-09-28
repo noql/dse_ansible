@@ -1,0 +1,23 @@
+- name: Frame the create statements 
+  set_fact:
+   create_keyspace_DEV: "CREATE KEYSPACE {{ keyspace_name }} WITH replication = {'class': 'NetworkTopologyStrategy', 'TSDC2': '3'}  AND durable_writes = true"
+   create_keyspace_UAT: "CREATE KEYSPACE {{ keyspace_name }} WITH replication = {'class': 'NetworkTopologyStrategy', 'SDC1': '3', 'SDC2': '3', 'TDC1': '3', 'TDC2': '3'}  AND durable_writes = true;"
+   create_keyspace_TRN: "CREATE KEYSPACE {{ keyspace_name }} WITH replication = {'class': 'NetworkTopologyStrategy', 'TSDC': '3'}  AND durable_writes = true;"
+
+- name: Copy the script to Target server
+  copy: 
+    src: invoke_Cqlsh.sh
+    dest: "{{ target_script_loc }}"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: 074
+
+- name: Execute CQL Script
+  shell: "{{ target_script_loc }}/invoke_Cqlsh.sh {{ create_keyspace_{{ env }} }}"
+  run_once: yes
+  ignore_errors: yes
+
+
+  
+     
+
