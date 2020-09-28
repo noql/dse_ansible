@@ -1,0 +1,30 @@
+- name: Delete  the directories of the keyspaces if they already exist in DD-Domain
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+     - '{{ stage_loc }}/{{ keyspace_name }}'
+
+- name: Create the directories for each keyspace  in DD-Domain
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+     - '{{ stage_loc }}/{{ keyspace_name }}'
+
+- name: Delete  the directories of the keyspaces if they already exist on ansible control server
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+     - '{{ local_loc }}/{{ keyspace_name }}'
+  delegate_to: localhost
+
+- name: Create the directories for each keyspace on ansible control server
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+     - '{{ local_loc }}/{{ keyspace_name }}'
+  delegate_to: localhost
+

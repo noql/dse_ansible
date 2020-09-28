@@ -1,0 +1,14 @@
+- name: Create the dir on ansible server
+  include: delete_create.yaml
+  run_once: true
+
+- name: Extract the keyspace 
+  include: execute_script_to_backup_keyspace.yaml
+  run_once: true
+- name: Sync the file
+  include: sync_files.yaml
+ 
+#- name: Clean up the files
+#  include: Cleanup_files.yaml
+#  run_once: true
+

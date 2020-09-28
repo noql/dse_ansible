@@ -1,0 +1,6 @@
+- name: Extract the sstable datafiles and metadata files from the source
+  synchronize:
+     mode: pull
+     src: "{{ data_dir }}/{{ table_name }}*"
+     dest: "{{ local_loc }}"
+     recursive: yes  

@@ -1,0 +1,8 @@
+- name: Clean up the files from the remote system 
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - '{{ target_script_loc }}/keyspace_backup.sh'
+    - '{{ target_script_loc }}/{{ keyspace_name }}_backup'
+    - '{{ target_script_loc }}/{{ keyspace_name }}__stage'

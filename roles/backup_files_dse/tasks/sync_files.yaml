@@ -1,0 +1,25 @@
+- name: Delete the directories for tables
+  file:
+    path: "{{ stage_loc }}/{{ keyspace_name }}/{{item}}_{{host}}"
+    state: absent
+  loop: "{{ (remote_file['content'] | b64decode).splitlines() }}"
+
+- name: Create the directories for tables 
+  file:
+    path: "{{ stage_loc }}/{{ keyspace_name }}/{{item}}_{{host}}"
+    state: directory
+  loop: "{{ (remote_file['content'] | b64decode).splitlines() }}"
+
+- name: Find the directory name for the table
+  find:
+    paths: "{{ data_dir }}"
+    patterns: "{{ item }}*"
+    use_regex: yes 
+    file_type: directory
+  loop: "{{ (remote_file['content'] | b64decode).splitlines() }}"
+  
+- name: Copy the files
+  shell: "cp -rf {{ data_dir }}/{{ item }}-*/* {{ stage_loc }}/{{ keyspace_name }}/{{ item }}_{{host}}"
+  loop: "{{ (remote_file['content'] | b64decode).splitlines() }}"
+
+

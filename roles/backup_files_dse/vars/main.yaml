@@ -1,0 +1,4 @@
+stage_loc: '/mnt/DATADOMAIN-DSE/training_refresh_stage'
+target_script_loc: '/home/cassandra'
+data_dir: '/data/data/{{ keyspace_name }}'
+local_loc: '/home/ansible/dse_backup'

@@ -1,0 +1,42 @@
+- name: Copy the script from local to source system
+  copy:
+    src: keyspace_backup.sh
+    dest: "{{ target_script_loc }}"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: 0744
+- name: Execute the file and extract the ddl for the table
+  shell: '{{ target_script_loc }}/keyspace_backup.sh  {{ keyspace_name }}'
+  register: files
+- debug: 
+     var: files.stdout
+
+- name: Copy files from keyspae to the DD-Domain
+  copy:
+     src: "{{ item }}"
+     dest: "{{ stage_loc }}/{{ keyspace_name }}"
+     remote_src: yes
+  with_items:
+         - '{{ target_script_loc }}/{{ keyspace_name }}_backup'
+         - '{{ target_script_loc }}/list_tables_{{ keyspace_name }}'
+
+- name: Copy file from datastax server to Ansible server
+  synchronize:
+     mode: pull
+     src: "{{ item }}"
+     dest: "{{ local_loc }}/{{ keyspace_name }}"
+     recursive: yes
+  with_items: 
+         - '{{ target_script_loc }}/{{ keyspace_name }}_backup'
+         - '{{ target_script_loc }}/list_tables_{{ keyspace_name }}'
+     
+- name: Slurp the files
+  slurp: 
+     src: "{{ stage_loc }}/{{ keyspace_name }}/list_tables_{{ keyspace_name }}"
+  register: remote_file
+
+- debug:
+    msg: "{{ (remote_file['content'] | b64decode).splitlines() }}"
+
+  
+ 
